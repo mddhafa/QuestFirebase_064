@@ -8,10 +8,10 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 
 class NetworkMahasiswaRepository (
-    private val firebase: FirebaseFirestore
+    private val firestore: FirebaseFirestore
 ): MahasiswaRepository {
     override suspend fun getMahasiswa(): Flow<List<Mahasiswa>> = callbackFlow {
-        val mhsCollection = firebase.collection("mahasiswa")
+        val mhsCollection = firestore.collection("Mahasiswa")
             .orderBy("nama", Query.Direction.ASCENDING)
             .addSnapshotListener { value, error ->
                 if ( value != null){
@@ -27,7 +27,11 @@ class NetworkMahasiswaRepository (
     }
 
     override suspend fun insertMahasiswa(mahasiswa: Mahasiswa) {
-        TODO("Not yet implemented")
+        try {
+            firestore.collection("Mahasiswa").add(mahasiswa).await()
+        }catch (e: Exception){
+            throw Exception("Gagal menambahkkan data mahasiswa: ${e.message}")
+        }
     }
 
     override suspend fun updateMahasiswa(nim: String, mahasiswa: Mahasiswa) {
