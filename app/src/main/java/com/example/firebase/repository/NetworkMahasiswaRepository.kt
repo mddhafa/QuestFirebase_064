@@ -29,7 +29,9 @@ class NetworkMahasiswaRepository (
 
     override suspend fun insertMahasiswa(mahasiswa: Mahasiswa) {
         try {
-            firestore.collection("Mahasiswa").add(mahasiswa).await()
+            firestore.collection("Mahasiswa")
+                .add(mahasiswa)
+                .await()
         }catch (e: Exception){
             throw Exception("Gagal menambahkkan data mahasiswa: ${e.message}")
         }
@@ -58,8 +60,18 @@ class NetworkMahasiswaRepository (
         }
     }
 
-    override suspend fun getMahasiswaById(nim: String): Flow<Mahasiswa> {
-        TODO("Not yet implemented")
+    override suspend fun getMahasiswaById(nim: String): Flow<Mahasiswa> = callbackFlow {
+        val listMhs = firestore.collection("Mahasiswa")
+            .document()
+            .addSnapshotListener { value, error ->
+                if (value != null){
+                    val mhs = value.toObject(Mahasiswa::class.java)!!
+                    trySend(mhs)
+                }
+            }
+        awaitClose {
+            listMhs.remove()
+        }
     }
 
 }
