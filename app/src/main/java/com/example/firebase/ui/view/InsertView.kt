@@ -180,7 +180,10 @@ fun FormMahasiswa(
         )
         Text(
             text = errorState.nama ?: "",
-            color = Color.Red)
+            color = Color.Red
+        )
+
+        Spacer(modifier = Modifier.height(1.dp))
 
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
@@ -197,7 +200,7 @@ fun FormMahasiswa(
             text = errorState.nim ?: "",
             color = Color.Red)
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(1.dp))
         Text(text = "Jenis Kelamin")
         Row (
             modifier = Modifier.fillMaxWidth()
@@ -221,6 +224,8 @@ fun FormMahasiswa(
             text = errorState.jenis_kelamin ?: "",
             color = Color.Red)
 
+        Spacer(modifier = Modifier.height(1.dp))
+
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
             value = mahasiswaEvent.alamat,
@@ -235,7 +240,8 @@ fun FormMahasiswa(
             text = errorState.alamat ?: "",
             color = Color.Red)
 
-        Spacer(modifier = Modifier.height(16.dp))
+
+        Spacer(modifier = Modifier.height(1.dp))
         Text(text = "Kelas")
         Row {
             kelas.forEach { kelas ->
@@ -257,19 +263,53 @@ fun FormMahasiswa(
             text = errorState.kelas ?: "",
             color = Color.Red)
 
+
         OutlinedTextField(
             modifier = Modifier.fillMaxWidth(),
-            value = mahasiswaEvent.angkatan,
+            value = mahasiswaEvent.judulskripsi,
             onValueChange = {
-                onValueChange(mahasiswaEvent.copy(angkatan = it))
+                onValueChange(mahasiswaEvent.copy(judulskripsi = it))
             },
-            label = { Text("Angkatan") },
-            isError = errorState.angkatan != null,
-            placeholder = { Text("Masukkan Angkatan") },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+            label = { Text("Judul Skripsi") },
+            isError = errorState.judulskripsi != null,
+            placeholder = { Text("Masukkan Judul Skripsi") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
         Text(
-            text = errorState.angkatan ?: "",
-            color = Color.Red)
+            text = errorState.judulskripsi ?: "",
+            color = Color.Red
+        )
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = mahasiswaEvent.dospem1,
+            onValueChange = {
+                onValueChange(mahasiswaEvent.copy(dospem1 = it))
+            },
+            label = { Text("Dosen Pembimbing 1") },
+            isError = errorState.dospem1 != null,
+            placeholder = { Text("Masukkan Nama Dosen Pembimbing 1") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
+        Text(
+            text = errorState.dospem1 ?: "",
+            color = Color.Red
+        )
+
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = mahasiswaEvent.dospem2,
+            onValueChange = {
+                onValueChange(mahasiswaEvent.copy(dospem2 = it))
+            },
+            label = { Text("Dosen Pembimbing 2") },
+            isError = errorState.dospem1 != null,
+            placeholder = { Text("Masukkan Nama Dosen Pembimbing 2") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
+        )
+        Text(
+            text = errorState.dospem2 ?: "",
+            color = Color.Red
+        )
     }
 }
